@@ -1,5 +1,3 @@
-/* eslint-disable camelcase */
-/* eslint-disable react/state-in-constructor */
 import React from 'react';
 import PropTypes from 'prop-types';
 
