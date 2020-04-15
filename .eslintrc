@@ -5,6 +5,7 @@
   "rules": {
     "react/jsx-filename-extension": "off",
     "react/prefer-stateless-function": "off",
-    "react/jsx-fragments": "off"
+    "react/jsx-fragments": "off",
+    "react/state-in-constructor": "off"
   }
 }
