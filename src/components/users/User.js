@@ -104,6 +104,7 @@ User.propTypes = {
   repos: PropTypes.array.isRequired,
   getUser: PropTypes.func.isRequired,
   getUserRepos: PropTypes.func.isRequired,
+  match: PropTypes.object.isRequired,
 };
 
 export default User;
