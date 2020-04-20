@@ -60,6 +60,25 @@ const GithubState = (props) => {
     });
   };
 
+  // Get user repos
+  const getUserRepos = async (username) => {
+    setLoading();
+
+    const res = await axios.get(
+      `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
+      {
+        headers: {
+          Authorization: `token ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN}`,
+        },
+      }
+    );
+
+    dispatch({
+      type: GET_REPOS,
+      payload: res.data,
+    });
+  };
+
   return (
     <GithubContext.Provider
       value={{
@@ -70,6 +89,7 @@ const GithubState = (props) => {
         searchUsers,
         clearUsers,
         getUser,
+        getUserRepos,
       }}
     >
       {props.children}
