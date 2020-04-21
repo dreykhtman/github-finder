@@ -10,6 +10,15 @@ import {
   GET_REPOS,
 } from '../types';
 
+let githubPersonalAccessToken;
+
+if (process.env.NODE_ENV !== 'production') {
+  githubPersonalAccessToken =
+    process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN;
+} else {
+  githubPersonalAccessToken = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
+}
+
 const GithubState = (props) => {
   const initialState = {
     users: [],
@@ -30,7 +39,7 @@ const GithubState = (props) => {
       `https://api.github.com/search/users?q=${text}`,
       {
         headers: {
-          Authorization: `token ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN}`,
+          Authorization: `token ${githubPersonalAccessToken}`,
         },
       }
     );
@@ -50,7 +59,7 @@ const GithubState = (props) => {
 
     const res = await axios.get(`https://api.github.com/users/${username}`, {
       headers: {
-        Authorization: `token ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN}`,
+        Authorization: `token ${githubPersonalAccessToken}`,
       },
     });
 
@@ -68,7 +77,7 @@ const GithubState = (props) => {
       `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
       {
         headers: {
-          Authorization: `token ${process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN}`,
+          Authorization: `token ${githubPersonalAccessToken}`,
         },
       }
     );
