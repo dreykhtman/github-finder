@@ -10,13 +10,15 @@ import {
   GET_REPOS,
 } from '../types';
 
-let githubPersonalAccessToken;
+let githubClientId;
+let githubClientSecret;
 
 if (process.env.NODE_ENV !== 'production') {
-  githubPersonalAccessToken =
-    process.env.REACT_APP_GITHUB_PERSONAL_ACCESS_TOKEN;
+  githubClientId = process.env.REACT_APP_GITHUB_CLIENT_ID;
+  githubClientSecret = process.env.REACT_APP_GITHUB_CLIENT_SECRET;
 } else {
-  githubPersonalAccessToken = process.env.GITHUB_PERSONAL_ACCESS_TOKEN;
+  githubClientId = process.env.GITHUB_CLIENT_ID;
+  githubClientSecret = process.env.GITHUB_CLIENT_SECRET;
 }
 
 const GithubState = (props) => {
@@ -36,12 +38,7 @@ const GithubState = (props) => {
     setLoading();
 
     const res = await axios.get(
-      `https://api.github.com/search/users?q=${text}`,
-      {
-        headers: {
-          Authorization: `token ${githubPersonalAccessToken}`,
-        },
-      }
+      `https://api.github.com/search/users?q=${text}&client_id=${githubClientId}&client_secret=${githubClientSecret}`
     );
 
     dispatch({
@@ -57,11 +54,9 @@ const GithubState = (props) => {
   const getUser = async (username) => {
     setLoading();
 
-    const res = await axios.get(`https://api.github.com/users/${username}`, {
-      headers: {
-        Authorization: `token ${githubPersonalAccessToken}`,
-      },
-    });
+    const res = await axios.get(
+      `https://api.github.com/users/${username}?client_id=${githubClientId}&client_secret=${githubClientSecret}`
+    );
 
     dispatch({
       type: GET_USER,
@@ -74,12 +69,7 @@ const GithubState = (props) => {
     setLoading();
 
     const res = await axios.get(
-      `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc`,
-      {
-        headers: {
-          Authorization: `token ${githubPersonalAccessToken}`,
-        },
-      }
+      `https://api.github.com/users/${username}/repos?per_page=5&sort=created:asc&client_id=${githubClientId}&client_secret=${githubClientSecret}`
     );
 
     dispatch({
